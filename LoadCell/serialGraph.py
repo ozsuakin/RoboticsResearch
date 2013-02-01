@@ -9,6 +9,7 @@ CONVERSION_RATE = 1
 ser = serial.Serial(6, 9600)
 
 def calibrate():
+	print "calibrating zero..."
 	vals = []
 	for t in range(30):
 		x = int(ser.readline())
@@ -26,11 +27,11 @@ def calibrate():
 			x=0
 		vals.append(x)
 	weightSum = sum(vals)
-	wegithVal = weightSum/len(vals)
+	weightVal = weightSum/len(vals)
 	print "please enter the weight of the object in kilograms"
 	weight = sys.stdin.readline()
 	global CONVERSION_RATE
-	CONVERSION_RATE = int(weight)/wegithVal
+	CONVERSION_RATE = int(weight)/weightVal
 	print "conversion rate calculated to be: " + str(CONVERSION_RATE) + " kg per unit"
 	
 def main():
@@ -46,7 +47,7 @@ def main():
 		vals.append(x)
 		if len(vals) > WINDOW_SIZE:
 			vals.pop(0)
-		plt.plot(vals)
-		plt.show()
+		#plt.plot(vals)
+		#plt.show()
 		
 main()
