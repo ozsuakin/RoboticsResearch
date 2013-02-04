@@ -3,6 +3,9 @@
 #include <FastSerial.h>		
 #include <AP_GPS.h>			
 
+//DEBUG - LOAD CELL ANALOG IN PIN
+#define LOAD_CELL_PIN A7
+
 // *** NOTE!   Hardware version - Can be used for v1 (daughterboards) , v2 (flat) or new v3 (MPU6000)
 #define BOARD_VERSION 3 // 1 For V1 and 2 for V2 and 3 for new V3
 
@@ -245,6 +248,9 @@ void setup()
   } else {
     digitalWrite(SERIAL_MUX_PIN,LOW); //Serial Mux
   }
+  
+  //DEBUG - PINMODE FOR LOADCELL
+  pinMode(LOAD_CELL_PIN,INPUT);
 
   pinMode(RED_LED_PIN,OUTPUT); //Red LED
   pinMode(BLUE_LED_PIN,OUTPUT); // Blue LED

@@ -226,6 +226,10 @@ void printdata(void)
     }
         
 #endif  
+    //DEBUG - LOAD CELL DATA
+    int value = analogRead(LOAD_CELL_PIN);
+    Serial.print(",FRC:");
+    Serial.print(value);
 }
 
 #if PERFORMANCE_REPORTING == 1

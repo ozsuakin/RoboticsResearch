@@ -3,7 +3,6 @@ int value = 0;
 
 void setup(){
   pinMode(sensor, INPUT);
-  analogReference(EXTERNAL);
   Serial.begin(9600);
 }
 
