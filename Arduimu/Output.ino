@@ -84,6 +84,12 @@ void printdata(void)
 		//Serial.print (",");
                 #endif
 	#endif
+
+        //HEY MAN - PRINT LOAD CELL
+        #if USE_THE_FORCE == 1
+            Serial.print(",FRC:");
+            Serial.print(analogRead(A7));
+        #endif
       
 	#if USE_BAROMETER == 1
 		Serial.print("Temp:");
@@ -225,7 +231,8 @@ void printdata(void)
           
     }
         
-#endif  
+
+#endif
 }
 
 #if PERFORMANCE_REPORTING == 1
