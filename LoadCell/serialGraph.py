@@ -74,11 +74,14 @@ def keypress(event):
 		record()
 
 def main():
-	global root
-	print "Press Escape to exit, press c to calibrate press r to record"
-	root.bind_all('<Key>', keypress) #lambda event: keypress(event, root))
+	#global root
+	#print "Press Escape to exit, press c to calibrate press r to record"
+	#root.bind_all('<Key>', keypress) #lambda event: keypress(event, root))
 	# don't show the tk window
-	root.withdraw()
-	root.mainloop()
+	#root.withdraw()
+	#root.mainloop()
+	calibrate()
+	record()
+
 	
 main()
