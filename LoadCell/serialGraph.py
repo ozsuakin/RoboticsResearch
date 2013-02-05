@@ -16,7 +16,7 @@ def calibrate():
 	print "calibrating zero..."
 	vals = []
 	for t in range(100):
-		x = int(ser.readline())
+		x = float(ser.readline())/1023
 		vals.append(x)
 	zeroSum = sum(vals)
 	global ZERO_VAL
@@ -26,7 +26,7 @@ def calibrate():
 	sys.stdin.readline()
 	vals = []
 	for t in range(100):
-		x = int(ser.readline()) - ZERO_VAL
+		x = float(ser.readline())/1023 - ZERO_VAL
 		if x<0:
 			x=0
 		print x
@@ -39,28 +39,30 @@ def calibrate():
 	if weightVal == 0:
 		print "no weight was detected!"
 		weightVal = 1
-	CONVERSION_RATE = int(weight)/weightVal
+	CONVERSION_RATE = float(weight)/weightVal
+	print "conversion rate = " + str(float(weight)) + "/" + str(weightVal)
 	print "conversion rate calculated to be: " + str(CONVERSION_RATE) + " kg per unit"
 	
 def record():
-	print "beginning recording..."	
+	print "press enter to record"
+	sys.stdin.readline()
 	vals = []
-	for i in range(100):
+	for i in range(300):
 		global CONVERSION_RATE
 		global ZERO_VAL
 		global WINDOW_SIZE
-		x = int(ser.readline()) - ZERO_VAL
+		x = float(ser.readline())/1023 - ZERO_VAL
 		if x<0:
 			x=0
 		force = CONVERSION_RATE*(x)*10
 		print "" + str(force) + " N" + " " + str(x) 
-		vals.append(x)
+		vals.append(force)
 		#if len(vals) > WINDOW_SIZE:
 		#	vals.pop(0)
 		
 	plt.plot(vals)
-	plt.ylabel('force')
-	plt.xlabel('sample')
+	plt.ylabel('Force (N)')
+	plt.xlabel('Sample')
 	plt.show()
 
 def keypress(event):
@@ -78,10 +80,11 @@ def main():
 	#print "Press Escape to exit, press c to calibrate press r to record"
 	#root.bind_all('<Key>', keypress) #lambda event: keypress(event, root))
 	# don't show the tk window
-	#root.withdraw()
+	root.withdraw()
 	#root.mainloop()
 	calibrate()
 	record()
+	return
 
 	
 main()
