@@ -191,7 +191,7 @@ int gps_fix_count = 5;		//used to count 5 good fixes at ground startup
 
 //ADC variables
 volatile uint8_t MuxSel=0;
-volatile uint8_t analog_reference = DEFAULT;
+//volatile uint8_t analog_reference = DEFAULT;
 volatile uint16_t analog_buffer[8];
 volatile uint8_t analog_count[8];
 

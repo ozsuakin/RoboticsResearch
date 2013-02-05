@@ -7,23 +7,27 @@ def open_serial(port, baud=9600):
 
 
 def collect(T, dt, ser, verbose=False):
-    data = {"AccX":[],"AccY":[],"AccZ":[],"RLL":[],"PCH":[],"YAW":[],"MGX":[],"MGY":[],"MGZ":[],"MGH":[],"dt":dt}
+    data = {"AccX":[],"AccY":[],"AccZ":[],"RLL":[],"PCH":[],"YAW":[],"MGX":[],"MGY":[],"MGZ":[],"MGH":[],"FRC":[],"Time":[],"dt":dt}
 
     print "Starting data collection..."
-    while(T>0):
+    global currTime
+    currTime = 0
+    while(currTime < T):
         msg = ser.readline()
         if (not '$' in msg):
             if verbose:
                 print msg
+		print currTime
             try:
                 state = dict((n, float(x)) for n,x in [pair.split(":") for pair in msg.split(",")])
                 for key in state.keys():
                     data[key].append(state[key])
-                T -= dt
+		currTime = time.clock()
+		data["Time"].append(currTime)
             except ValueError:
                 pass
 
-        time.sleep(dt)
+        #time.sleep(dt)
     print "Data collection done"
 
     return data
@@ -35,3 +39,12 @@ def plot(data, key):
     plt.xlabel('seconds')
     plt.axis([0, data['dt']*len(data[key]), -ceil(max(data[key])), ceil(max(data[key]))])
     plt.show()
+
+def main():
+	ser = open_serial(51)
+	dat = collect(30, 1, ser, True)
+	for type in ["AccX", "AccY", "AccZ", "RLL", "PCH", "YAW"]:
+		plot(dat, type)
+
+
+main()
