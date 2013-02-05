@@ -84,6 +84,12 @@ void printdata(void)
 		//Serial.print (",");
                 #endif
 	#endif
+
+        //HEY MAN - PRINT LOAD CELL
+        #if USE_THE_FORCE == 1
+            Serial.print(",FRC:");
+            Serial.print(analogRead(A7));
+        #endif
       
 	#if USE_BAROMETER == 1
 		Serial.print("Temp:");
@@ -225,11 +231,7 @@ void printdata(void)
           
     }
         
-#endif  
-    //DEBUG - LOAD CELL DATA
-    int value = analogRead(LOAD_CELL_PIN);
-    Serial.print(",FRC:");
-    Serial.print(value);
+#endif   
 }
 
 #if PERFORMANCE_REPORTING == 1
